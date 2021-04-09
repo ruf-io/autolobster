@@ -2,16 +2,18 @@ version: '2.1'
 
 services:
   database:
-    image: mariadb
+    image: postgres
     environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=lobsters
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=lobsters
+      - POSTGRES_USER=root
     healthcheck:
-      test: "/usr/bin/mysql --user=root --password=password --execute \"SHOW DATABASES;\""
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
       timeout: 5s
       retries: 20
     volumes:
-      - 'lobsters_database:/var/lib/mysql'
+      - 'lobsters_database:/var/lib/postgresql'
   app:
     image: autolobsters/lobsters:latest
     build:
@@ -26,7 +28,7 @@ services:
       - LOBSTER_DATABASE=lobsters
       - LOBSTER_SITE_NAME=FLOBSTERS
       - RAILS_ENV=production
-      - LOBSTER_HOSTNAME=standard.flobste.rs
+      - LOBSTER_HOSTNAME=localhost
       - VIRTUAL_HOST=localhost
       - RAILS_MAX_THREADS=5
       - OPEN_SIGNUPS=true
