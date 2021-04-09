@@ -25,7 +25,7 @@ services:
       - MARIADB_USER=root
       - LOBSTER_DATABASE=lobsters
       - LOBSTER_SITE_NAME=FLOBSTERS
-      - RAILS_ENV=development
+      - RAILS_ENV=production
       - LOBSTER_HOSTNAME=localhost
       - VIRTUAL_HOST=localhost
       - RAILS_MAX_THREADS=5
